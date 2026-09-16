@@ -10,6 +10,8 @@ class MatrixLab:
         self.AB = None
         self.A_sq = None
         self.B_sq = None
+        self.inv_A = None
+        self.inv_B = None
 
     def create_array(self):
         print("\n--- Шаг 1. Создание массива ---")  
@@ -70,6 +72,29 @@ class MatrixLab:
         print("Квадратная матрица B:")
         print(self.B_sq)
 
+    def determinants_and_inverses(self):
+        print("\n--- Шаг 8. Определители и обратные матрицы ---")
+        det_A = np.linalg.det(self.A_sq)
+        det_B = np.linalg.det(self.B_sq)
+        print(f"Определитель матрицы A: {det_A:.4f}")
+        print(f"Определитель матрицы B: {det_B:.4f}")
+
+        try:
+            if np.abs(det_A) < 1e-9:
+                raise np.linalg.LinAlgError("Матрица вырождена.")
+            self.inv_A = np.linalg.inv(self.A_sq)
+            print("Обратная матрица для A успешно найдена.")
+        except np.linalg.LinAlgError:
+            print("Обратная матрица для A не существует, так как матрица вырождена.")
+
+        try:
+            if np.abs(det_B) < 1e-9:
+                raise np.linalg.LinAlgError("Матрица вырождена.")
+            self.inv_B = np.linalg.inv(self.B_sq)
+            print("Обратная ... усечено (успешно найдена).")
+        except np.linalg.LinAlgError:
+            print("Обратная матрица для B не существует, так как матрица вырождена.")
+
     def run(self):
         self.create_array()
         self.form_matrix_A()
@@ -78,6 +103,7 @@ class MatrixLab:
         self.sum_vectors()
         self.matrix_multiplication()
         self.make_square()
+        self.determinants_and_inverses()
 
 if __name__ == "__main__":
     lab = MatrixLab()

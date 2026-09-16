@@ -8,6 +8,8 @@ class MatrixLab:
         self.a_vec = None 
         self.b_vec = None
         self.AB = None
+        self.A_sq = None
+        self.B_sq = None
 
     def create_array(self):
         print("\n--- Шаг 1. Создание массива ---")  
@@ -54,6 +56,20 @@ class MatrixLab:
         print("Результат произведения A * B:")
         print(self.AB)
 
+    def make_square(self):
+        print("\n--- Шаг 7. Приведение к квадратному виду ---")
+        self.A_sq = np.delete(self.A, 2, axis=1)
+        
+        new_columns = np.random.randint(10, 21, (6, 3))
+        self.B_sq = np.hstack((self.B, new_columns))
+        
+        print(f"Новый размер матрицы A: {self.A_sq.shape}")
+        print("Квадратная матрица A:")
+        print(self.A_sq)
+        print(f"Новый размер матрицы B: {self.B_sq.shape}")
+        print("Квадратная матрица B:")
+        print(self.B_sq)
+
     def run(self):
         self.create_array()
         self.form_matrix_A()
@@ -61,6 +77,7 @@ class MatrixLab:
         self.create_matrix_B()
         self.sum_vectors()
         self.matrix_multiplication()
+        self.make_square()
 
 if __name__ == "__main__":
     lab = MatrixLab()

@@ -18,9 +18,17 @@ class MatrixLab:
         print("Матрица A:")
         print(self.A)
 
+    def transform_A(self):
+        print("\n--- Шаг 3. Преобразование элементов A ---")
+        self.A = self.A * 2.5 - 5
+        print("Преобразованная матрица A:")
+        print(self.A)
+        print(f"Минимальный элемент в матрице A: {self.A.min()}")
+
     def run(self):
         self.create_array()
         self.form_matrix_A()
+        self.transform_A()
 
 if __name__ == "__main__":
     lab = MatrixLab()

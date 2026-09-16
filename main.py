@@ -5,6 +5,9 @@ class MatrixLab:
         self.my_array = None
         self.A = None
         self.B = None
+        self.a_vec = None 
+        self.b_vec = None
+        self.AB = None
 
     def create_array(self):
         print("\n--- Шаг 1. Создание массива ---")  
@@ -34,11 +37,30 @@ class MatrixLab:
         print("Матрица B: ")
         print(self.B)
 
+    def sum_vectors(self):
+        print("\n--- Шаг 5. Векторы сумм ---")
+        self.a_vec = self.A.sum(axis=1)
+        self.b_vec = self.B.sum(axis=0)
+        
+        print(f"Вектор a (суммы строк A), размер {self.a_vec.shape}:")
+        print(self.a_vec)
+        print(f"Вектор b (суммы столбцов B), размер {self.b_vec.shape}:")
+        print(self.b_vec)
+
+    def matrix_multiplication(self):
+        print("\n--- Шаг 6. Умножение матриц ---")
+        self.AB = self.A @ self.B
+        print(f"Размерность произведения A * B: {self.AB.shape}")
+        print("Результат произведения A * B:")
+        print(self.AB)
+
     def run(self):
         self.create_array()
         self.form_matrix_A()
         self.transform_A()
         self.create_matrix_B()
+        self.sum_vectors()
+        self.matrix_multiplication()
 
 if __name__ == "__main__":
     lab = MatrixLab()

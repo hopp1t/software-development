@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 class MatrixLab:
     def __init__(self):
@@ -95,6 +96,78 @@ class MatrixLab:
         except np.linalg.LinAlgError:
             print("Обратная матрица для B не существует, так как матрица вырождена.")
 
+    def matrix_power(self):
+        print("\n--- Шаг 9. Возведение в степень ---")
+        self.A_sq_pow = np.linalg.matrix_power(self.A_sq, 6)
+        self.B_sq_pow = np.linalg.matrix_power(self.B_sq, 14)
+        
+        print(f"Размер A в 6-й степени: {self.A_sq_pow.shape}")
+        print("Первые 2 строки и 2 столбца матрицы A^6:")
+        print(self.A_sq_pow[:2, :2])
+        
+        print(f"Размер B в 14-й степени: {self.B_sq_pow.shape}")
+        print("Первые 2 строки и 2 столбца матрицы B^14:")
+        print(self.B_sq_pow[:2, :2])
+
+    def solve_system(self):
+        print("\n--- Шаг 10. Решение системы уравнений (Вариант 4) ---")
+        # Точные коэффициенты из вашего скриншота:
+        M = np.array([
+            [2.3, -3.4,   0.0, -12.0],
+            [2.6,  8.4,   0.0,  -6.0],
+            [1.3,  4.5, -17.0,   2.0],
+            [1.8,  0.0,  15.0,  16.0]
+        ])
+        V = np.array([-14.0, 0.4, -3.6, 17.4])
+
+        X = np.linalg.solve(M, V)
+        print("Полученное решение системы для Варианта 4 (x1, x2, x3, x4):")
+        print(X)
+
+        residual = M @ X - V
+        residual_norm = np.linalg.norm(residual)
+        print(f"Норма невязки: {residual_norm:.4e}")
+        print("Невязка близка к нулю:", np.isclose(residual_norm, 0.0, atol=1e-10))
+
+    def additional_analysis(self):
+        print("\n--- Шаг 11. Дополнительный анализ матриц (после шага 9) ---")
+        rank_A = np.linalg.matrix_rank(self.A_sq_pow)
+        rank_B = np.linalg.matrix_rank(self.B_sq_pow)
+        print(f"Ранг матрицы A: {rank_A}, Ранг матрицы B: {rank_B}")
+
+        print(f"Среднее элементов A: {self.A_sq_pow.mean():.4e}")
+        print(f"Среднее элементов B: {self.B_sq_pow.mean():.4e}")
+
+        cov_A = np.cov(self.A_sq_pow)
+        print(f"Размер ковариационной матрицы A: {cov_A.shape}")
+
+        max_idx_flat = np.argmax(self.A_sq_pow)
+        row_max, col_max = divmod(max_idx_flat, self.A_sq_pow.shape[1])
+        print(f"Индексы макс. элемента в A: строка {row_max}, столбец {col_max}")
+
+        B_flat = self.B_sq_pow.flatten()
+        print(f"Размерность одномерного вектора из матрицы B: {B_flat.shape}")
+
+    def save_and_load(self):
+        print("\n--- Шаг 12. Сохранение и загрузка матриц ---")
+        file_A = "matrix_A.csv"
+        file_B = "matrix_B.csv"
+
+        np.savetxt(file_A, self.A_sq_pow, delimiter=",")
+        np.savetxt(file_B, self.B_sq_pow, delimiter=",")
+        print("Матрицы успешно сохранены в файлы.")
+
+        loaded_A = np.loadtxt(file_A, delimiter=",")
+        loaded_B = np.loadtxt(file_B, delimiter=",")
+
+        max_diff_A = np.max(np.abs(self.A_sq_pow - loaded_A))
+        max_diff_B = np.max(np.abs(self.B_sq_pow - loaded_B))
+        print(f"Максимальная разность для матрицы A: {max_diff_A}")
+        print(f"Максимальная разность для матрицы B: {max_diff_B}")
+
+        if os.path.exists(file_A): os.remove(file_A)
+        if os.path.exists(file_B): os.remove(file_B)
+
     def run(self):
         self.create_array()
         self.form_matrix_A()
@@ -104,6 +177,10 @@ class MatrixLab:
         self.matrix_multiplication()
         self.make_square()
         self.determinants_and_inverses()
+        self.matrix_power()
+        self.solve_system()
+        self.additional_analysis()
+        self.save_and_load()
 
 if __name__ == "__main__":
     lab = MatrixLab()

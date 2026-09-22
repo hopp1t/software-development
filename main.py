@@ -120,7 +120,7 @@ class MatrixLab:
         V = np.array([-14.0, 0.4, -3.6, 17.4])
 
         X = np.linalg.solve(M, V)
-        print("Полученное решение системы для Варианта 4 (x1, x2, x3, x4):")
+        print("Полученное решение системы:")
         print(X)
 
         residual = M @ X - V
@@ -129,7 +129,7 @@ class MatrixLab:
         print("Невязка близка к нулю:", np.isclose(residual_norm, 0.0, atol=1e-10))
 
     def additional_analysis(self):
-        print("\n--- Шаг 11. Дополнительный анализ матриц (после шага 9) ---")
+        print("\n--- Шаг 11. Дополнительный анализ матриц ---")
         rank_A = np.linalg.matrix_rank(self.A_sq_pow)
         rank_B = np.linalg.matrix_rank(self.B_sq_pow)
         print(f"Ранг матрицы A: {rank_A}, Ранг матрицы B: {rank_B}")

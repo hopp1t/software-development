@@ -92,7 +92,7 @@ class MatrixLab:
             if np.abs(det_B) < 1e-9:
                 raise np.linalg.LinAlgError("Матрица вырождена.")
             self.inv_B = np.linalg.inv(self.B_sq)
-            print("Обратная ... усечено (успешно найдена).")
+            print("Обратная матрица для B успешно найдена.")
         except np.linalg.LinAlgError:
             print("Обратная матрица для B не существует, так как матрица вырождена.")
 
